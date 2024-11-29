@@ -137,7 +137,7 @@ function Chat(
         newSocket.on('upload-complete', () => {
             setUploadProgress(0)
         })
-    }, [phoneRec, user.chat, socket, name, uploadProgress]);
+    }, [phoneRec, user.chat, socket, name, uploadProgress, phone]);
 
     const handleFileChange = () => {
         if (fileInputRef.current && fileInputRef.current.files.length > 0) {
@@ -149,7 +149,7 @@ function Chat(
         if (chatApi?.length > 0 || uploadProgress === 100) {
             endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
         }
-    }, [chatApi, uploadProgress]);
+    }, [chatApi, uploadProgress, endOfMessagesRef]);
 
     const [message, setMessage] = useState(selectChat?.message || '');
     const [groupMessage, setgroupMessage] = useState(false)
@@ -254,7 +254,7 @@ function Chat(
         } catch (error) {
 
         }
-    }, [phoneRec, socketData])
+    }, [phoneRec])
 
     useEffect(() => {
         newSocket.on('updateImages', (data) => {
@@ -267,14 +267,13 @@ function Chat(
     }, [handleUserID])
 
     useEffect(() => {
-        const contact = user?.contact?.filter((e) => {
+        user?.contact?.filter((e) => {
             if (e.contact === userChat?.phone) {
                 return e
             }
+            return false
         })
-        contact?.map((e) => {
-        })
-    }, [userChat])
+    }, [userChat, user?.contact])
 
     const handleDelete = async (e) => {
         const { sender, receiver, unique } = selectChat;
@@ -454,13 +453,13 @@ function Chat(
         // Video bo'laklarini tozalash
         setVideoChunks([]);
         setVideoURL(null); // Video URLni tozalash
-    }, [videoURL]);
+    }, [videoURL, chunkSize, groupMessage, name, phone, phoneRec, videoChunks]);
 
     useEffect(() => {
         if (videoURL) {
             uploadVideo(); // Video yuborish
         }
-    }, [])
+    }, [videoURL, uploadVideo])
 
     const [targetVideo, setTargetVideo] = useState()
 

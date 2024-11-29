@@ -78,7 +78,7 @@ function App() {
     } catch (error) {
       console.error(error);
     }
-  }, [socket, update, updateImage, deleteChat, updateGroup]); // token, dispatch, va getUser dependency massivida bo'lishi kerak
+  }, [socket, update, updateImage, deleteChat, updateGroup, token, dispatch]); // token, dispatch, va getUser dependency massivida bo'lishi kerak
 
   useEffect(() => {
     getUserApi(); // Endi xavfsiz ishlaydi
@@ -91,7 +91,7 @@ function App() {
     } catch (error) {
       console.log(error);
     }
-  }, [user.phone, socket, update, updateImage, deleteChat, updateGroup]); // Faqat zarur dependencylarni qo'shing
+  }, [user.phone, socket, update, updateImage, deleteChat, updateGroup, dispatch]); // Faqat zarur dependencylarni qo'shing
 
   useEffect(() => {
     getAllGroups();
