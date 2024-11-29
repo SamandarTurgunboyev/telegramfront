@@ -16,25 +16,6 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    newSocket.on('message', (data) => {
-      setSocket(data)
-    })
-
-    newSocket.on('updateUsers', (data) => {
-      setUpdate(data)
-    })
-
-    newSocket.on('updateImage', (data) => {
-      setUpdateImage(data)
-    })
-
-    newSocket.on('deletingMessage', (data) => {
-      const { deleting } = data
-      setDeleteChat(deleting)
-    })
-  }, [])
-
-  useEffect(() => {
     if (user.phone) {
       newSocket.emit('userInfo', user.phone);
     }
