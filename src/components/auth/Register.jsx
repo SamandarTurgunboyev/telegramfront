@@ -8,8 +8,6 @@ function Register() {
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
     const navigation = useNavigate()
-    const height = window.innerHeight
-    const width = window.innerWidth
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {

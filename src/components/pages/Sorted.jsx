@@ -9,7 +9,7 @@ import { api } from '../../api';
 import newSocket from '../../socket';
 import CircleIcon from '@mui/icons-material/Circle';
 
-function Sorted({ selectGroup, usersOnline, setMessageGroup, setSelectGroup, setPhone, setUserName, setUserChat, scrollToBottom, chatSelected, setchatSelected }) {
+function Sorted({ usersOnline, setMessageGroup, setSelectGroup, setPhone, setUserName, setUserChat, scrollToBottom, chatSelected, setchatSelected }) {
     const groups = useSelector(state => state.user.groups)
 
     const [openMenu, setOpenMenu] = useState(false)

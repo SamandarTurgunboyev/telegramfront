@@ -32,8 +32,6 @@ function Home() {
     const [usersOnline, setUsersOnline] = useState([])
 
     const [selectGroup, setSelectGroup] = useState(null)
-    console.log(selectGroup, 'selectgroup');
-
 
     const scrollToBottom = () => {
         endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' });

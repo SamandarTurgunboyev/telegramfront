@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { Box, Button, Modal, Typography } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import EditName from './EditName';
 import NewImage from './NewImage';
-import { getUserChatID, imageUrl } from '../../../../api/url';
-import newSocket from '../../../../socket';
-import { api } from '../../../../api';
+import { imageUrl } from '../../../../api/url';
 
 const style = {
     position: 'absolute',

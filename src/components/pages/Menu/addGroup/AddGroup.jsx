@@ -65,8 +65,6 @@ function AddGroup() {
         }
     };
 
-    console.log(groupImage.name);
-
     return (
         <div className="ml-4">
             <div className="w-full text-center">

@@ -20,7 +20,6 @@ const style = {
 };
 
 function AddContact({ setPhone, scrollToBottom, setUserName }) {
-    const [userPhone, setUserPhone] = useState()
     const { user } = useSelector(state => state.user)
 
     const [open, setOpen] = useState(false);
@@ -37,11 +36,6 @@ function AddContact({ setPhone, scrollToBottom, setUserName }) {
         setPhone(e.contact || e.sender)
 
         setUserName(e.name)
-        if (e.sender) {
-            setUserPhone(e.sender)
-        } else if (e.contact) {
-            setUserPhone(e.contact)
-        }
     }
 
     return (

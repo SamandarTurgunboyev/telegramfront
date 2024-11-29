@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { api } from '../../api';
 import { addUser } from '../../store/userSlice';
-import AddIcon from '@mui/icons-material/Add';
 import newSocket from '../../socket';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -42,7 +41,7 @@ const style = {
     scrollbarWidth: 'none'
 };
 
-function ChildModal({ setSelectGroup, open, setOpen, userInfo, phone, selectGroup }) {
+function ChildModal({ setSelectGroup, open, setOpen, userInfo, phone }) {
     const [name, setName] = useState(userInfo?.name)
     const [contact, setContact] = useState(userInfo?.phone)
     const handleClose = () => {
@@ -95,7 +94,7 @@ function ChildModal({ setSelectGroup, open, setOpen, userInfo, phone, selectGrou
     );
 }
 
-function User({ setchatSelected, setSelectGroup, open, setOpen, userInfo, selectGroup }) {
+function User({  open, setOpen, userInfo, selectGroup }) {
     const handleClose = () => setOpen(false);
     const [index, setIndex] = useState(0)
     const reversedMassiv = userInfo?.userImage?.slice().reverse();
@@ -103,7 +102,6 @@ function User({ setchatSelected, setSelectGroup, open, setOpen, userInfo, select
     const [media, setMedia] = useState([])
     const [userPhone, setUserPhone] = useState([])
     const { chat, contact, phone, _id } = useSelector((state) => state.user.user)
-    const user = useSelector((state) => state.user.user)
     const [type, setType] = useState('')
     const dispatch = useDispatch()
     const [openChild, setOpenChild] = React.useState(false);
@@ -125,7 +123,6 @@ function User({ setchatSelected, setSelectGroup, open, setOpen, userInfo, select
     }, [selectGroup])
 
     const [updateGroup, setUpdateGroup] = useState(null);
-    const [leaveGroups, setLeaveGroup] = useState(null);
     const [isConnected, setIsConnected] = useState(false);
 
     useEffect(() => {
@@ -228,8 +225,6 @@ function User({ setchatSelected, setSelectGroup, open, setOpen, userInfo, select
             newSocket.off('leaveUsersGroup', handleLeaveUsersGroup);
         };
     }, []);
-
-    console.log(selectUsers, 'users');
 
     const AddUsersGroup = () => {
         selectUsers.forEach((e) => {

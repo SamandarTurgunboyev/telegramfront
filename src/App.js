@@ -13,7 +13,6 @@ import newSocket from './socket'
 function App() {
   const { token } = useSelector(state => state.user)
   const user = useSelector(state => state.user.user)
-  const group = useSelector(state => state.user.groups)
   const [updateGroup, setUpdateGroup] = useState()
   console.log(user, 'app js');
 
@@ -21,7 +20,6 @@ function App() {
   const [update, setUpdate] = useState()
   const [updateImage, setUpdateImage] = useState()
   const [deleteChat, setDeleteChat] = useState()
-  const [usersOnline, setUsersOnline] = useState([])
   const dispatch = useDispatch()
 
   useEffect(() => {

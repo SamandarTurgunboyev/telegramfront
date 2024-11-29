@@ -40,10 +40,8 @@ function NewImage() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [file, setFile] = useState()
     const { phone } = useSelector(state => state.user.user)
-    console.log(phone, ';img');
 
     const { userImage } = useSelector(state => state.user.user)
-    console.log(selectedFile);
     const chunkSize = 70 * 1024; // 70KB chunk size
 
     const handleOpen = () => {

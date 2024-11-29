@@ -55,7 +55,6 @@ function Chat(
         setMenuVisible,
         setMenuPosition,
         selectChat,
-        usersOnline,
         setSelectChat,
         selectGroup,
         setSelectGroup,
@@ -68,18 +67,14 @@ function Chat(
     const fileInputRef = useRef();
     const [open, setOpen] = useState(false);
     const user = useSelector((state) => state.user.user)
-    const [contact, setContact] = useState()
     const [chatApi, setChat] = useState([])
     const [socket, setSocket] = useState([])
-    const [userImage, setUserImage] = useState()
     const [isRecording, setIsRecording] = useState(false);
     const [audioURL, setAudioURL] = useState(null);
     const mediaRecorderRef = useRef(null);
     const [audioChunks, setAudioChunks] = useState([]);
     const [videoChunks, setVideoChunks] = useState([]);
     const audioRef = useRef(null);
-    console.log(selectGroup, 'selectgroup');
-    
 
     const handleStartRecording = async () => {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -107,12 +102,6 @@ function Chat(
         setIsRecording(false);
     };
 
-    const handlePlayAudio = () => {
-        if (audioRef.current) {
-            audioRef.current.play();
-        }
-    };
-
     const handleClearAudio = () => {
         setAudioURL(null);
         if (audioRef.current) {
@@ -127,9 +116,6 @@ function Chat(
     const [uploadProgress, setUploadProgress] = useState(0);
     const [userInfoModal, setUserInfoModal] = React.useState(false);
     const handleOpen = () => setUserInfoModal(true);
-
-    console.log(chatApi, 'chat');
-
 
     const handleChat = async () => {
         if (uploadProgress === 0) {
@@ -287,7 +273,6 @@ function Chat(
             }
         })
         contact?.map((e) => {
-            setContact(e.name)
         })
     }, [userChat])
 
@@ -346,24 +331,6 @@ function Chat(
         })
     }
 
-    const handleDeleteGroup = async (e) => {
-        const { sender, receiver, unique } = selectChat;
-        selectChat.message = userRef.current.value
-        const updateMessage = selectChat
-        setEdit(false);
-        setSelectChat(''); // chatni tozalash
-        try {
-            await api.put(deleteChatGroup, {
-                phone: sender, group: receiver, unique
-            })
-
-        } catch (error) {
-            console.log(error);
-        }
-        newSocket.emit('deleteMessage', {
-            deleting: true
-        })
-    }
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
