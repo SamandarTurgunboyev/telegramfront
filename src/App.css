@@ -1,0 +1,138 @@
+body {
+  overflow: hidden;
+}
+
+.active {
+  background-color: white;
+  color: black;
+}
+
+.myMessage {
+  color: white;
+  background-color: #8774e1;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 20px;
+  margin-top: 20px;
+}
+
+.youMessage {
+  color: white;
+  background-color: #212121;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  margin-top: 20px;
+}
+
+.file-input__input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.file-input__label {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  font-size: 14px;
+  padding: 10px 12px;
+  background-color: #1976D2;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+}
+
+.file-input__label svg {
+  height: 16px;
+  margin-right: 4px;
+}
+
+.avatar-upload {
+  position: relative;
+  max-width: 205px;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.avatar-upload .avatar-edit {
+  position: absolute;
+  left: 100%;
+  z-index: 1;
+}
+
+.avatar-upload .avatar-edit input {
+  display: none;
+}
+
+.avatar-upload .avatar-edit input+label {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  margin-bottom: 0;
+  cursor: pointer;
+  font-weight: normal;
+  transition: all 0.2s ease-in-out;
+}
+
+/* src/VoiceRecorder.css */
+.voice-recorder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.voice-recorder button {
+  background-color: #0088cc;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.voice-recorder button:hover {
+  background-color: #007bb5;
+}
+
+.voice-recorder audio {
+  margin-top: 20px;
+}
+
+.voice-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background-color: #f1f1f1;
+  border-radius: 12px;
+  max-width: 250px;
+}
+
+.play-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 4px;
+  background-color: #ddd;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #0b81ff;
+  transition: width 0.1s ease;
+}
