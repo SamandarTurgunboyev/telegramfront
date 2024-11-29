@@ -147,6 +147,7 @@ function User({ open, setOpen, userInfo, selectGroup }) {
                 if (type === 'audio') {
                     return e.typeFile.includes(type)
                 }
+                return false
             })
             setMedia(sorted)
         }
@@ -172,7 +173,7 @@ function User({ open, setOpen, userInfo, selectGroup }) {
                 console.log(error);
             }
         }
-    }, [type, userInfo?.phone, updateGroup, chat, selectGroup])
+    }, [type, userInfo?.phone, chat, selectGroup])
 
     useEffect(() => {
         getMedia()

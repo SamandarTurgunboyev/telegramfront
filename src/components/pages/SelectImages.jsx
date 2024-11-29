@@ -64,7 +64,8 @@ function SelectImages({ name, fileInputRef, phone, modal, setModal, phoneRec, sc
                 URL.revokeObjectURL(fileUrl); // Memory leak oldini olish uchun
             };
         }
-    }, []);
+    }, [fileInputRef]);
+    
     const handleClose = () => {
         setModal(false);
         fileInputRef.current.value = ''

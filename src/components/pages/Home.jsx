@@ -22,9 +22,6 @@ function Home() {
     const [getUser, setGetUser] = useState();
     const [groupMessage, setMessageGroup] = useState(false)
 
-
-    const [updateImage, setUpdateImage] = useState()
-    const [update, setUpdate] = useState()
     const [userNetwork, setUserNetwork] = useState()
 
     const endOfMessagesRef = useRef(null);
@@ -68,12 +65,6 @@ function Home() {
             })
             setChat(con)
         }
-        newSocket.on('updateUsers', (data) => {
-            setUpdate(data)
-        })
-        newSocket.on('updateImage', data => {
-            setUpdateImage(data)
-        })
 
         return () => {
             newSocket.off('userInfo');

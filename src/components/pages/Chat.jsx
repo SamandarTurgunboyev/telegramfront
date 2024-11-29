@@ -111,7 +111,6 @@ function Chat(
 
     const dispatch = useDispatch()
 
-    const [socketData, setSocketData] = useState()
     const [uploadProgress, setUploadProgress] = useState(0);
     const [userInfoModal, setUserInfoModal] = React.useState(false);
     const handleOpen = () => setUserInfoModal(true);
@@ -137,7 +136,7 @@ function Chat(
         newSocket.on('upload-complete', () => {
             setUploadProgress(0)
         })
-    }, [phoneRec, user.chat, socket, name, uploadProgress, phone]);
+    }, [phoneRec, uploadProgress, phone]);
 
     const handleFileChange = () => {
         if (fileInputRef.current && fileInputRef.current.files.length > 0) {
@@ -255,12 +254,6 @@ function Chat(
 
         }
     }, [phoneRec])
-
-    useEffect(() => {
-        newSocket.on('updateImages', (data) => {
-            setSocketData(data.userImage)
-        })
-    }, [])
 
     useEffect(() => {
         handleUserID()
