@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux';
-import { Box, Button, Modal, Typography } from '@mui/material';
+import { Box, Button, Modal } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import EditName from './EditName';
 import NewImage from './NewImage';
 import { imageUrl } from '../../../../api/url';
+import { useState } from 'react';
 
 const style = {
     position: 'absolute',
@@ -19,7 +20,7 @@ const style = {
 };
 
 function SettingContact() {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const { name, phone, userImage } = useSelector((state => state.user.user))
     // const [userImage, setUserImage] = useState()
 

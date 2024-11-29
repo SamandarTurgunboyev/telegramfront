@@ -58,8 +58,7 @@ function Chat(
         setSelectChat,
         selectGroup,
         setSelectGroup,
-        setchatSelected,
-        setGetUser
+        setchatSelected
     }
 ) {
     const userRef = useRef()
@@ -250,7 +249,6 @@ function Chat(
                     userPhone: phoneRec
                 }
             })
-            setUserImage(user.data.data.userImage);
         } catch (error) {
 
         }
