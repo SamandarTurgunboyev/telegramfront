@@ -79,9 +79,9 @@ function Home() {
             newSocket.off('userInfo');
             newSocket.off('userDis');
         };
-    }, [phone])
+    }, [phone, userApi?.chat, userApi?.contact])
 
-    const getUserId =useCallback( async () => {
+    const getUserId = useCallback(async () => {
         try {
             const user = await api.get(getUserChatID, {
                 params: {
@@ -91,7 +91,7 @@ function Home() {
             setGetUser(user.data.data)
         } catch (error) {
         }
-    }, [phone, update, updateImage, usersOnline])
+    }, [phone])
 
     useEffect(() => {
         getUserId()
@@ -121,7 +121,7 @@ function Home() {
             setchatSelected(false)
         }
 
-        if (windowWidth <= 576 && getUser || selectGroup) {
+        if ((windowWidth <= 576) && (getUser || selectGroup)) {
             setchatSelected(true)
         }
     }, [windowWidth, getUser, selectGroup])
@@ -158,7 +158,7 @@ function Home() {
     }, [selectGroup, getUser])
 
     console.log(selectGroup, 'group select');
-    
+
 
     return (
         <div className='flex overflow-hidden w-full bg-slate-700' onClick={handleClick}>

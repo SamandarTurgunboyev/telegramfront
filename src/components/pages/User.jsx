@@ -140,7 +140,7 @@ function User({ open, setOpen, userInfo, selectGroup }) {
     const getMedia = useCallback(async () => {
         if (selectGroup) {
             const sorted = selectGroup?.chat?.filter((e) => {
-                if (e.fileName !== "" && !e.typeFile.includes('audio')) {
+                if ((e.fileName !== "") && (!e.typeFile.includes('audio'))) {
                     return e.typeFile.includes(type)
                 }
 
@@ -152,7 +152,7 @@ function User({ open, setOpen, userInfo, selectGroup }) {
         }
         else {
             const sorted = chat?.filter((e) => {
-                if (e.sender === userInfo?.phone || e.receiver === userInfo?.phone) {
+                if ((e.sender === userInfo?.phone) || (e.receiver === userInfo?.phone)) {
                     if (e.fileName !== "" && !e.typeFile.includes('audio')) {
                         return e.typeFile.includes(type)
                     }
@@ -172,7 +172,7 @@ function User({ open, setOpen, userInfo, selectGroup }) {
                 console.log(error);
             }
         }
-    }, [type, userInfo?.phone, updateGroup])
+    }, [type, userInfo?.phone, updateGroup, chat, selectGroup])
 
     useEffect(() => {
         getMedia()

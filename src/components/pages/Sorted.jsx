@@ -50,7 +50,7 @@ function Sorted({ usersOnline, setMessageGroup, setSelectGroup, setPhone, setUse
 
         const resultReceiver = Array.from(uniqueMapReceiver.values());
         setReceiver(resultReceiver);
-    }, [user?.chat, user?.contact])
+    }, [user?.chat, user?.contact, user.phone])
 
     const handleGroup = (e) => {
         scrollToBottom()
@@ -99,7 +99,7 @@ function Sorted({ usersOnline, setMessageGroup, setSelectGroup, setPhone, setUse
         } catch (error) {
             console.error(error, 'groupId');
         }
-    }, [updateGroup, groupName]);
+    }, [updateGroup, groupName, setSelectGroup, setUserChat, setUserName]);
 
     useEffect(() => {
         if (groupName) {
@@ -108,7 +108,7 @@ function Sorted({ usersOnline, setMessageGroup, setSelectGroup, setPhone, setUse
         if (updateGroup && groupName) {
             handleGroupID();
         }
-    }, [handleGroupID]);
+    }, [handleGroupID, groupName, updateGroup]);
 
     useEffect(() => {
         const senders = sender?.filter((e) => {
@@ -222,7 +222,7 @@ function Sorted({ usersOnline, setMessageGroup, setSelectGroup, setPhone, setUse
 
         // setUserContactImages va setReceiverMap'ni yangilash
         setReceiverMap(finalResult);
-    }, [receiverMaps]);
+    }, [receiverMaps, user?.contact, user?.phone]);
 
     useEffect(() => {
         handleUserImages()
