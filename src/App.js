@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllGroup, getUser } from './api/url'
 import { api } from './api'
 import { addgroups, addUser } from './store/userSlice'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import newSocket from './socket'
 
 function App() {
