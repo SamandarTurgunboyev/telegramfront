@@ -14,7 +14,6 @@ function App() {
   const { token } = useSelector(state => state.user)
   const user = useSelector(state => state.user.user)
   const [updateGroup, setUpdateGroup] = useState()
-  console.log(user, 'app js');
 
   const [socket, setSocket] = useState()
   const [update, setUpdate] = useState()
@@ -79,7 +78,7 @@ function App() {
     } catch (error) {
       console.error(error);
     }
-  }, [token, dispatch, getUser]); // token, dispatch, va getUser dependency massivida bo'lishi kerak
+  }, [socket, update, updateImage, deleteChat, updateGroup]); // token, dispatch, va getUser dependency massivida bo'lishi kerak
 
   useEffect(() => {
     getUserApi(); // Endi xavfsiz ishlaydi
@@ -92,7 +91,7 @@ function App() {
     } catch (error) {
       console.log(error);
     }
-  }, [user.phone, dispatch, getAllGroup]); // Faqat zarur dependencylarni qo'shing
+  }, [user.phone, socket, update, updateImage, deleteChat, updateGroup]); // Faqat zarur dependencylarni qo'shing
 
   useEffect(() => {
     getAllGroups();

@@ -1,5 +1,5 @@
 import { Box, Modal, Button, Card, CardMedia, Typography, Menu, MenuItem, TextField, CardContent, CardActions } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { addContact, deleteContact, getAllGroupUsers, imageUrl } from '../../api/url';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -41,9 +41,9 @@ const style = {
     scrollbarWidth: 'none'
 };
 
-function ChildModal({ setSelectGroup, open, setOpen, userInfo, phone }) {
+function ChildModal({ open, setOpen, userInfo, phone }) {
     const [name, setName] = useState(userInfo?.name)
-    const [contact, setContact] = useState(userInfo?.phone)
+    const contact = userInfo?.phone
     const handleClose = () => {
         setOpen(false);
     };
@@ -94,7 +94,7 @@ function ChildModal({ setSelectGroup, open, setOpen, userInfo, phone }) {
     );
 }
 
-function User({  open, setOpen, userInfo, selectGroup }) {
+function User({ open, setOpen, userInfo, selectGroup }) {
     const handleClose = () => setOpen(false);
     const [index, setIndex] = useState(0)
     const reversedMassiv = userInfo?.userImage?.slice().reverse();
@@ -123,7 +123,6 @@ function User({  open, setOpen, userInfo, selectGroup }) {
     }, [selectGroup])
 
     const [updateGroup, setUpdateGroup] = useState(null);
-    const [isConnected, setIsConnected] = useState(false);
 
     useEffect(() => {
         const handleAddUsersGroup = data => setUpdateGroup(data.data);
@@ -138,7 +137,7 @@ function User({  open, setOpen, userInfo, selectGroup }) {
         };
     }, []);
 
-    const getMedia = async () => {
+    const getMedia = useCallback(async () => {
         if (selectGroup) {
             const sorted = selectGroup?.chat?.filter((e) => {
                 if (e.fileName !== "" && !e.typeFile.includes('audio')) {
@@ -173,11 +172,11 @@ function User({  open, setOpen, userInfo, selectGroup }) {
                 console.log(error);
             }
         }
-    }
+    }, [type, userInfo?.phone, updateGroup])
 
     useEffect(() => {
         getMedia()
-    }, [type, userInfo?.phone, updateGroup, isConnected])
+    }, [getMedia])
 
     useEffect(() => {
         const user = contact?.filter((e) => {
@@ -242,13 +241,6 @@ function User({  open, setOpen, userInfo, selectGroup }) {
         setAnchorEl(null);
     };
 
-    const AddAdminGroup = () => {
-        selectUsers.forEach((e) => {
-            newSocket.emit('groupAddAdmin', ({ phone: e.phone, groupName: selectGroup.name }))
-        })
-        setOpen(false)
-    }
-
     const [editGroup, setEditGroup] = useState(false)
     const [addUsersGroup, setAddUsersGroup] = useState(false)
 
@@ -306,7 +298,7 @@ function User({  open, setOpen, userInfo, selectGroup }) {
 
     const [groupUsers, setGroopUsers] = useState([])
 
-    const getAllGroupUser = async () => {
+    const getAllGroupUser = useCallback(async () => {
         try {
             const res = await api.get(`${getAllGroupUsers}?groupName=${selectGroup.name}`)
             console.log(res.data.data.groupUsers, 'res users');
@@ -315,13 +307,11 @@ function User({  open, setOpen, userInfo, selectGroup }) {
             console.log(error);
 
         }
-    }
+    }, [selectGroup])
 
     useEffect(() => {
         getAllGroupUser()
-    }, [selectGroup])
-    console.log(selectGroup, 'selecr groups');
-
+    }, [getAllGroupUser])
 
     return (
         <Modal

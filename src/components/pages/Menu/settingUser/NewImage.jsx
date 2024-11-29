@@ -1,12 +1,10 @@
 import { Box, Button, Modal, styled } from "@mui/material";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { editImage, imageUrl } from "../../../../api/url";
+import { imageUrl } from "../../../../api/url";
 import newSocket from "../../../../socket";
-import { api } from "../../../../api";
-import { addUser } from "../../../../store/userSlice";
 
 const style = {
     position: 'absolute',

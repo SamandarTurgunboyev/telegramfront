@@ -244,9 +244,9 @@ function Chat(
         handleChat()
     }, [handleChat])
 
-    const handleUserID = async () => {
+    const handleUserID = useCallback(async () => {
         try {
-            const user = await api.get(getUserChatID, {
+            await api.get(getUserChatID, {
                 params: {
                     userPhone: phoneRec
                 }
@@ -254,7 +254,7 @@ function Chat(
         } catch (error) {
 
         }
-    }
+    }, [phoneRec, socketData])
 
     useEffect(() => {
         newSocket.on('updateImages', (data) => {
@@ -264,7 +264,7 @@ function Chat(
 
     useEffect(() => {
         handleUserID()
-    }, [phoneRec, socketData])
+    }, [handleUserID])
 
     useEffect(() => {
         const contact = user?.contact?.filter((e) => {
@@ -412,7 +412,7 @@ function Chat(
         setVideoChunks([]);
     };
 
-    const uploadVideo = () => {
+    const uploadVideo = useCallback(() => {
         if (!videoURL) return;
 
         const file = new Blob(videoChunks, { type: 'video/mp4' });
@@ -454,13 +454,13 @@ function Chat(
         // Video bo'laklarini tozalash
         setVideoChunks([]);
         setVideoURL(null); // Video URLni tozalash
-    };
+    }, [videoURL]);
 
     useEffect(() => {
         if (videoURL) {
             uploadVideo(); // Video yuborish
         }
-    }, [videoURL])
+    }, [])
 
     const [targetVideo, setTargetVideo] = useState()
 
@@ -487,7 +487,7 @@ function Chat(
         if (targetVideo) {
             targetVideo.pause()
         }
-    }, [setTargetVideo])
+    }, [targetVideo])
 
     return (
         <>

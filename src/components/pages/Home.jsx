@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import '../../App.css'
 import Chat from './Chat'
 import Sorted from './Sorted'
@@ -81,7 +81,7 @@ function Home() {
         };
     }, [phone])
 
-    const getUserId = async () => {
+    const getUserId =useCallback( async () => {
         try {
             const user = await api.get(getUserChatID, {
                 params: {
@@ -91,11 +91,11 @@ function Home() {
             setGetUser(user.data.data)
         } catch (error) {
         }
-    }
+    }, [phone, update, updateImage, usersOnline])
 
     useEffect(() => {
         getUserId()
-    }, [phone, update, updateImage, usersOnline])
+    }, [getUserId])
 
     const [chatSelected, setchatSelected] = useState(false)
     const [menuVisible, setMenuVisible] = useState(false);

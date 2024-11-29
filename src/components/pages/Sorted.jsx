@@ -1,9 +1,8 @@
 import { Avatar, Button, Divider, List, ListItem, ListItemAvatar, ListItemText } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import MenuIcon from '@mui/icons-material/Menu';
 import { useSelector } from 'react-redux'
 import Menu from './Menu/Menu';
-import axios from 'axios';
 import { getGroupId, getUserChatID, imageUrl } from '../../api/url';
 import { api } from '../../api';
 import newSocket from '../../socket';
@@ -13,7 +12,6 @@ function Sorted({ usersOnline, setMessageGroup, setSelectGroup, setPhone, setUse
     const groups = useSelector(state => state.user.groups)
 
     const [openMenu, setOpenMenu] = useState(false)
-    const [userPhone, setUserPhone] = useState()
     const { user } = useSelector(state => state.user)
 
     const [sender, setSender] = useState()
@@ -55,20 +53,16 @@ function Sorted({ usersOnline, setMessageGroup, setSelectGroup, setPhone, setUse
     }, [user?.chat, user?.contact])
 
     const handleGroup = (e) => {
-        console.log(e, 'target e group');
-
         scrollToBottom()
         setchatSelected(true)
         setGroupName(e.name)
         setUserChat(null)
         setUserName(null)
-        setUserPhone(null)
         setMessageGroup(true)
         setPhone(e.name)
     }
 
     const [updateGroup, setUpdateGroup] = useState(null);
-    const [isConnected, setIsConnected] = useState(false);
 
     useEffect(() => {
         const handleAddUsersGroup = data => setUpdateGroup(data.data);
@@ -83,7 +77,7 @@ function Sorted({ usersOnline, setMessageGroup, setSelectGroup, setPhone, setUse
         newSocket.on('addAdminsGroup', handleAddAdminsGroup);
         newSocket.on('editGroup', handleEditGroup);
         newSocket.on('leaveUsersGroup', handleLeaveUsersGroup);
-        newSocket.on('deletsGroups',  handleDeleteGroup);
+        newSocket.on('deletsGroups', handleDeleteGroup);
 
         return () => {
             newSocket.off('addUsersGroup', handleAddUsersGroup);
@@ -95,18 +89,17 @@ function Sorted({ usersOnline, setMessageGroup, setSelectGroup, setPhone, setUse
     }, []);
     console.log(groupName);
 
-    const handleGroupID = async () => {
+    const handleGroupID = useCallback(async () => {
         try {
             const response = await api.get(`${getGroupId}?groupName=${groupName}`);
             console.log(response.data.data, 'group');
             setSelectGroup(response.data.data);
             setUserChat(null);
             setUserName(null);
-            setUserPhone(null);
         } catch (error) {
             console.error(error, 'groupId');
         }
-    };
+    }, [updateGroup, groupName]);
 
     useEffect(() => {
         if (groupName) {
@@ -115,7 +108,7 @@ function Sorted({ usersOnline, setMessageGroup, setSelectGroup, setPhone, setUse
         if (updateGroup && groupName) {
             handleGroupID();
         }
-    }, [updateGroup, groupName]);
+    }, [handleGroupID]);
 
     useEffect(() => {
         const senders = sender?.filter((e) => {
@@ -176,15 +169,13 @@ function Sorted({ usersOnline, setMessageGroup, setSelectGroup, setPhone, setUse
         setGroupName('')
         setUserName(e.name)
         setMessageGroup(false)
-        setUserPhone(e.phone)
-
     }
 
     const handleOpen = () => {
         setOpenMenu(!openMenu)
     }
 
-    const handleUserImages = async () => {
+    const handleUserImages = useCallback(async () => {
         // user.contacts uchun API chaqiruvlari
         const userContactPromises = user?.contact?.map(async (e) => {
             try {
@@ -231,14 +222,11 @@ function Sorted({ usersOnline, setMessageGroup, setSelectGroup, setPhone, setUse
 
         // setUserContactImages va setReceiverMap'ni yangilash
         setReceiverMap(finalResult);
-    };
+    }, [receiverMaps]);
 
     useEffect(() => {
         handleUserImages()
-    }, [receiverMaps]);
-
-    console.log(usersOnline.phone);
-
+    }, [handleUserImages]);
 
     return (
         <div className={`${chatSelected && window.innerWidth <= 576 ? "hidden" : "block"} bg-slate-900 w-[400px] h-[100vh] overflow-auto`} style={{
