@@ -13,12 +13,6 @@ import newSocket from './socket'
 function App() {
   const { token } = useSelector(state => state.user)
   const user = useSelector(state => state.user.user)
-  const [updateGroup, setUpdateGroup] = useState()
-
-  const [socket, setSocket] = useState()
-  const [update, setUpdate] = useState()
-  const [updateImage, setUpdateImage] = useState()
-  const [deleteChat, setDeleteChat] = useState()
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -96,29 +90,6 @@ function App() {
   useEffect(() => {
     getAllGroups();
   }, [getAllGroups]);
-
-
-  useEffect(() => {
-    const handleAddUsersGroup = data => setUpdateGroup(data.data);
-    const handleAddAdminsGroup = data => setUpdateGroup(data.data);
-    const handleEditGroup = data => setUpdateGroup(data.data);
-    const handleLeaveUsersGroup = data => setUpdateGroup(data.data);
-    const handleDeleteGroup = data => setUpdateGroup(data.data);
-
-    newSocket.on('addUsersGroup', handleAddUsersGroup);
-    newSocket.on('addAdminsGroup', handleAddAdminsGroup);
-    newSocket.on('editGroup', handleEditGroup);
-    newSocket.on('leaveUsersGroup', handleLeaveUsersGroup);
-    newSocket.on('deletsGroups', handleDeleteGroup);
-
-    return () => {
-      newSocket.off('addUsersGroup', handleAddUsersGroup);
-      newSocket.off('addAdminsGroup', handleAddAdminsGroup);
-      newSocket.off('editGroup', handleEditGroup);
-      newSocket.off('leaveUsersGroup', handleLeaveUsersGroup);
-      newSocket.off('deletsGroups', handleDeleteGroup);
-    };
-  }, []);
 
   return (
     <>
