@@ -41,19 +41,6 @@ function App() {
     })
   }, [])
 
-  const getUserApi = async () => {
-    try {
-      const user = await api.get(getUser, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-
-      dispatch(addUser(user.data.data))
-    } catch (error) {
-    }
-  }
-
   useEffect(() => {
     if (user.phone) {
       newSocket.emit('userInfo', user.phone);
@@ -80,23 +67,36 @@ function App() {
     });
   })
 
-  useEffect(() => {
-    getUserApi()
-  }, [socket, update, updateImage, deleteChat, updateGroup])
-
-
-  const getAllGroups = async () => {
+  const getUserApi = useCallback(async () => {
     try {
-      const group = await api.get(`${getAllGroup}?phone=${user.phone}`)
-      dispatch(addgroups(group.data.data))
+      const user = await api.get(getUser, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      dispatch(addUser(user.data.data));
+    } catch (error) {
+      console.error(error);
+    }
+  }, [token, dispatch, getUser]); // token, dispatch, va getUser dependency massivida bo'lishi kerak
+
+  useEffect(() => {
+    getUserApi(); // Endi xavfsiz ishlaydi
+  }, [getUserApi]);
+
+  const getAllGroups = useCallback(async () => {
+    try {
+      const group = await api.get(`${getAllGroup}?phone=${user.phone}`);
+      dispatch(addgroups(group.data.data));
     } catch (error) {
       console.log(error);
     }
-  }
+  }, [user.phone, dispatch, getAllGroup]); // Faqat zarur dependencylarni qo'shing
 
   useEffect(() => {
-    getAllGroups()
-  }, [user.phone, socket, update, updateImage, deleteChat, updateGroup])
+    getAllGroups();
+  }, [getAllGroups]);
 
 
   useEffect(() => {
@@ -110,7 +110,7 @@ function App() {
     newSocket.on('addAdminsGroup', handleAddAdminsGroup);
     newSocket.on('editGroup', handleEditGroup);
     newSocket.on('leaveUsersGroup', handleLeaveUsersGroup);
-    newSocket.on('deletsGroups',  handleDeleteGroup);
+    newSocket.on('deletsGroups', handleDeleteGroup);
 
     return () => {
       newSocket.off('addUsersGroup', handleAddUsersGroup);

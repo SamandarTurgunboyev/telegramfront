@@ -3,7 +3,7 @@ import '../../App.css'
 import SendIcon from '@mui/icons-material/Send';
 import newSocket from '../../socket';
 import { api } from '../../api';
-import { deleteChat, deleteChatGroup, editChat, getUserChat, getUserChatID, imageUrl } from '../../api/url';
+import { deleteChat, editChat, getUserChat, getUserChatID, imageUrl } from '../../api/url';
 import { useDispatch, useSelector } from 'react-redux';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { Box, Button, Card, CardMedia, Modal, styled, TextareaAutosize, Typography } from '@mui/material';
@@ -116,7 +116,7 @@ function Chat(
     const [userInfoModal, setUserInfoModal] = React.useState(false);
     const handleOpen = () => setUserInfoModal(true);
 
-    const handleChat = async () => {
+    const handleChat = useCallback(async () => {
         if (uploadProgress === 0) {
             try {
                 const response = await api.get(getUserChat, {
@@ -137,7 +137,7 @@ function Chat(
         newSocket.on('upload-complete', () => {
             setUploadProgress(0)
         })
-    };
+    }, [phoneRec, user.chat, socket, name, uploadProgress]);
 
     const handleFileChange = () => {
         if (fileInputRef.current && fileInputRef.current.files.length > 0) {
@@ -146,7 +146,9 @@ function Chat(
     };
 
     useEffect(() => {
-        endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+        if (chatApi?.length > 0 || uploadProgress === 100) {
+            endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+        }
     }, [chatApi, uploadProgress]);
 
     const [message, setMessage] = useState(selectChat?.message || '');
@@ -240,7 +242,7 @@ function Chat(
 
     useEffect(() => {
         handleChat()
-    }, [phoneRec, user.chat, socket, name, uploadProgress])
+    }, [handleChat])
 
     const handleUserID = async () => {
         try {
