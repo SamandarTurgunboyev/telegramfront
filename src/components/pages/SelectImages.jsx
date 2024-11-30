@@ -52,7 +52,9 @@ function SelectImages({ name, fileInputRef, phone, modal, setModal, phoneRec, sc
     const textRef = useRef()
     const [img, setImg] = useState()
     const chunkSize = 70 * 1024; // 70KB chunk size
-
+    console.log(img, 'file');
+    
+    
     useEffect(() => {
         if (fileInputRef.current && fileInputRef.current.files.length > 0) {
             const file = fileInputRef.current.files[0];
@@ -64,7 +66,7 @@ function SelectImages({ name, fileInputRef, phone, modal, setModal, phoneRec, sc
                 URL.revokeObjectURL(fileUrl); // Memory leak oldini olish uchun
             };
         }
-    }, [fileInputRef]);
+    }, [fileInputRef.current?.files]);
     
     const handleClose = () => {
         setModal(false);
