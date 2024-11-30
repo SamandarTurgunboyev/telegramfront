@@ -173,7 +173,7 @@ function User({ open, setOpen, userInfo, selectGroup }) {
                 console.log(error);
             }
         }
-    }, [type, userInfo?.phone, chat, selectGroup])
+    }, [type, userInfo?.phone, updateGroup, chat, selectGroup])
 
     useEffect(() => {
         getMedia()

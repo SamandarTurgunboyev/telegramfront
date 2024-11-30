@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import '../../App.css'
 import Chat from './Chat'
 import Sorted from './Sorted'
@@ -22,6 +22,9 @@ function Home() {
     const [getUser, setGetUser] = useState();
     const [groupMessage, setMessageGroup] = useState(false)
 
+
+    const [updateImage, setUpdateImage] = useState()
+    const [update, setUpdate] = useState()
     const [userNetwork, setUserNetwork] = useState()
 
     const endOfMessagesRef = useRef(null);
@@ -65,14 +68,20 @@ function Home() {
             })
             setChat(con)
         }
+        newSocket.on('updateUsers', (data) => {
+            setUpdate(data)
+        })
+        newSocket.on('updateImage', data => {
+            setUpdateImage(data)
+        })
 
         return () => {
             newSocket.off('userInfo');
             newSocket.off('userDis');
         };
-    }, [phone, userApi?.chat, userApi?.contact])
+    }, [phone])
 
-    const getUserId = useCallback(async () => {
+    const getUserId = async () => {
         try {
             const user = await api.get(getUserChatID, {
                 params: {
@@ -82,11 +91,11 @@ function Home() {
             setGetUser(user.data.data)
         } catch (error) {
         }
-    }, [phone])
+    }
 
     useEffect(() => {
         getUserId()
-    }, [getUserId])
+    }, [phone, update, updateImage, usersOnline])
 
     const [chatSelected, setchatSelected] = useState(false)
     const [menuVisible, setMenuVisible] = useState(false);
@@ -112,7 +121,7 @@ function Home() {
             setchatSelected(false)
         }
 
-        if ((windowWidth <= 576) && (getUser || selectGroup)) {
+        if (windowWidth <= 576 && getUser || selectGroup) {
             setchatSelected(true)
         }
     }, [windowWidth, getUser, selectGroup])
@@ -149,7 +158,7 @@ function Home() {
     }, [selectGroup, getUser])
 
     console.log(selectGroup, 'group select');
-
+    
 
     return (
         <div className='flex overflow-hidden w-full bg-slate-700' onClick={handleClick}>

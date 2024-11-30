@@ -99,7 +99,7 @@ function Sorted({ usersOnline, setMessageGroup, setSelectGroup, setPhone, setUse
         } catch (error) {
             console.error(error, 'groupId');
         }
-    }, [groupName, setSelectGroup, setUserChat, setUserName]);
+    }, [updateGroup, groupName, setSelectGroup, setUserChat, setUserName]);
 
     useEffect(() => {
         if (groupName) {

@@ -3,7 +3,7 @@ import '../../App.css'
 import SendIcon from '@mui/icons-material/Send';
 import newSocket from '../../socket';
 import { api } from '../../api';
-import { deleteChat, editChat, getUserChat, getUserChatID, imageUrl } from '../../api/url';
+import { deleteChat, deleteChatGroup, editChat, getUserChat, getUserChatID, imageUrl } from '../../api/url';
 import { useDispatch, useSelector } from 'react-redux';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { Box, Button, Card, CardMedia, Modal, styled, TextareaAutosize, Typography } from '@mui/material';
@@ -58,7 +58,8 @@ function Chat(
         setSelectChat,
         selectGroup,
         setSelectGroup,
-        setchatSelected
+        setchatSelected,
+        setGetUser
     }
 ) {
     const userRef = useRef()
@@ -111,11 +112,12 @@ function Chat(
 
     const dispatch = useDispatch()
 
+    const [socketData, setSocketData] = useState()
     const [uploadProgress, setUploadProgress] = useState(0);
     const [userInfoModal, setUserInfoModal] = React.useState(false);
     const handleOpen = () => setUserInfoModal(true);
 
-    const handleChat = useCallback(async () => {
+    const handleChat = async () => {
         if (uploadProgress === 0) {
             try {
                 const response = await api.get(getUserChat, {
@@ -136,7 +138,7 @@ function Chat(
         newSocket.on('upload-complete', () => {
             setUploadProgress(0)
         })
-    }, [phoneRec, uploadProgress, phone]);
+    };
 
     const handleFileChange = () => {
         if (fileInputRef.current && fileInputRef.current.files.length > 0) {
@@ -145,10 +147,8 @@ function Chat(
     };
 
     useEffect(() => {
-        if (chatApi?.length > 0 || uploadProgress === 100) {
-            endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
-        }
-    }, [chatApi, uploadProgress, endOfMessagesRef]);
+        endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [chatApi, uploadProgress]);
 
     const [message, setMessage] = useState(selectChat?.message || '');
     const [groupMessage, setgroupMessage] = useState(false)
@@ -241,32 +241,42 @@ function Chat(
 
     useEffect(() => {
         handleChat()
-    }, [handleChat])
+    }, [phoneRec, user.chat, socket, name, uploadProgress])
 
-    const handleUserID = useCallback(async () => {
+    const [userImage, setUserImage] = useState()
+
+    const handleUserID = async () => {
         try {
-            await api.get(getUserChatID, {
+            const user = await api.get(getUserChatID, {
                 params: {
                     userPhone: phoneRec
                 }
             })
+            setUserImage(user.data.data.userImage);
         } catch (error) {
 
         }
-    }, [phoneRec])
+    }
+
+    useEffect(() => {
+        newSocket.on('updateImages', (data) => {
+            setSocketData(data.userImage)
+        })
+    }, [])
 
     useEffect(() => {
         handleUserID()
-    }, [handleUserID])
+    }, [phoneRec, socketData])
 
     useEffect(() => {
-        user?.contact?.filter((e) => {
+        const contact = user?.contact?.filter((e) => {
             if (e.contact === userChat?.phone) {
                 return e
             }
-            return false
         })
-    }, [userChat, user?.contact])
+        contact?.map((e) => {
+        })
+    }, [userChat])
 
     const handleDelete = async (e) => {
         const { sender, receiver, unique } = selectChat;
@@ -404,7 +414,7 @@ function Chat(
         setVideoChunks([]);
     };
 
-    const uploadVideo = useCallback(() => {
+    const uploadVideo = () => {
         if (!videoURL) return;
 
         const file = new Blob(videoChunks, { type: 'video/mp4' });
@@ -446,13 +456,13 @@ function Chat(
         // Video bo'laklarini tozalash
         setVideoChunks([]);
         setVideoURL(null); // Video URLni tozalash
-    }, [videoURL, chunkSize, groupMessage, name, phone, phoneRec, videoChunks]);
+    };
 
     useEffect(() => {
         if (videoURL) {
             uploadVideo(); // Video yuborish
         }
-    }, [videoURL, uploadVideo])
+    }, [videoURL])
 
     const [targetVideo, setTargetVideo] = useState()
 
@@ -479,7 +489,7 @@ function Chat(
         if (targetVideo) {
             targetVideo.pause()
         }
-    }, [targetVideo])
+    }, [setTargetVideo])
 
     return (
         <>
