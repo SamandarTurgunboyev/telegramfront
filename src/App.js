@@ -110,7 +110,7 @@ function App() {
     newSocket.on('addAdminsGroup', handleAddAdminsGroup);
     newSocket.on('editGroup', handleEditGroup);
     newSocket.on('leaveUsersGroup', handleLeaveUsersGroup);
-    newSocket.on('deletsGroups',  handleDeleteGroup);
+    newSocket.on('deletsGroups', handleDeleteGroup);
 
     return () => {
       newSocket.off('addUsersGroup', handleAddUsersGroup);
@@ -124,22 +124,18 @@ function App() {
   return (
     <>
       <Routes>
-        {
-          token ?
-            <>
-              <Route path='/' element={<Home />} />
-            </>
-            :
-            <>
-              <Route path='/' element={<Register />} />
-              <Route path='/login' element={<Login />} />
-            </>
-        }
-        {token &&
+        {token ? (
           <>
+            <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
           </>
-        }
+        ) : (
+          <>
+            <Route path="/" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+          </>
+        )}
+        <Route path="*" element={<NotFound />} /> {/* 404 sahifasi uchun */}
       </Routes>
     </>
   )
