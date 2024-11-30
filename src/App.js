@@ -135,7 +135,6 @@ function App() {
             <Route path="/login" element={<Login />} />
           </>
         )}
-        <Route path="*" element={<NotFound />} /> {/* 404 sahifasi uchun */}
       </Routes>
     </>
   )
