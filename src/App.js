@@ -135,6 +135,11 @@ function App() {
               <Route path='/login' element={<Login />} />
             </>
         }
+        {token &&
+          <>
+            <Route path="/home" element={<Home />} />
+          </>
+        }
       </Routes>
     </>
   )
