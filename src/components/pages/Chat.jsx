@@ -493,11 +493,11 @@ function Chat(
 
     return (
         <>
-            <div className='bg-slate-700 w-full h-[100vh]'>
-                <div className={`w-full flex flex-col items-center h-[100%]`}>
+            <div className='bg-slate-700 w-full h-[100vh] relative'>
+                <div className={`w-full flex flex-col items-center h-[100%] relative`}>
                     {chat ?
                         <>
-                            <div className='bg-slate-800 relative w-full flex justify-start items-center'>
+                            <div className='bg-slate-800 flex w-full justify-start items-center'>
                                 {windowWidth <= 576 &&
                                     <Button onClick={handleClose}>
                                         <WestIcon />
@@ -598,7 +598,7 @@ function Chat(
                         </>
                         : selectGroup &&
                         <>
-                            <div className='bg-slate-800 h-[20%] w-full flex justify-start items-center'>
+                            <div className='bg-slate-800 h-[20%] w-full flex justify-start items-center fixed'>
                                 {windowWidth <= 576 &&
                                     <Button sx={{ height: '100%' }} onClick={handleClose}>
                                         <WestIcon />
@@ -709,7 +709,7 @@ function Chat(
                             </button>
                         </div>
                     }
-                    <div className='w-[50%] relative flex gap-2 max-md:w-[90%] max-lg:w-[90%] relative'>
+                    <div className='w-[50%] fixed bottom-0 flex gap-2 max-md:w-[90%] max-lg:w-[90%]'>
                         {edit ? (
                             <TextareaAutosize
                                 placeholder="Message"
