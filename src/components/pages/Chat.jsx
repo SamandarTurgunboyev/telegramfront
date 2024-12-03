@@ -497,7 +497,7 @@ function Chat(
                 <div className={`w-full flex flex-col items-center h-[100%]`}>
                     {chat ?
                         <>
-                            <div className='bg-slate-800 w-full flex justify-start items-center'>
+                            <div className='bg-slate-800 relative w-full flex justify-start items-center'>
                                 {windowWidth <= 576 &&
                                     <Button onClick={handleClose}>
                                         <WestIcon />
