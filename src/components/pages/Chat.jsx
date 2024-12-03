@@ -618,7 +618,7 @@ function Chat(
                                 </Button>
                             </div>
                             <div
-                                className='h-[83vh] w-[70%] max-md:w-[100%] max-lg:w-[100%] max-sm:w-[100%]'
+                                className='h-[83%] w-[70%] max-md:w-[100%] max-lg:w-[100%] max-sm:w-[100%]'
                                 style={{
                                     overflow: 'auto',
                                     scrollbarWidth: 'none',
