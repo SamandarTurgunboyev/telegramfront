@@ -709,7 +709,7 @@ function Chat(
                             </button>
                         </div>
                     }
-                    <div className='w-[50%] flex gap-2 max-md:w-[90%] max-lg:w-[90%] relative'>
+                    <div className='w-[50%] relative flex gap-2 max-md:w-[90%] max-lg:w-[90%] relative'>
                         {edit ? (
                             <TextareaAutosize
                                 placeholder="Message"
