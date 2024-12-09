@@ -229,7 +229,7 @@ function Sorted({ usersOnline, setMessageGroup, setSelectGroup, setPhone, setUse
     }, [handleUserImages]);
 
     return (
-        <div className={`${chatSelected && window.innerWidth <= 576 ? "hidden" : "block"} bg-slate-900 w-[30%] h-[100vh] overflow-auto`} style={{
+        <div className={`${chatSelected && window.innerWidth <= 576 ? "hidden" : "block"} bg-slate-900 w-[400px] h-[100vh] overflow-auto`} style={{
             scrollbarWidth: 'none'
         }}>
             {

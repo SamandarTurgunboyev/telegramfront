@@ -494,7 +494,7 @@ function Chat(
     return (
         <>
             <div className='bg-slate-700 w-full h-[100vh] relative'>
-                <div className={`w-full flex flex-col items-center h-[100%] relative`}>
+                <div className={`w-full flex flex-col items-center h-[100%]`}>
                     {chat ?
                         <>
                             <div className='bg-slate-800 flex w-full justify-start items-center'>
@@ -701,15 +701,14 @@ function Chat(
                     }
                     <User setchatSelected={setchatSelected} setSelectGroup={setSelectGroup} open={userInfoModal} setOpen={setUserInfoModal} userInfo={getUser} selectGroup={selectGroup} />
                     <SelectImages groupMessage={groupMessage} scrollToBottom={scrollToBottom} setSocket={setSocket} setUploadProgress={setUploadProgress} fileInputRef={fileInputRef} name={name} phone={phone} phoneRec={phoneRec} modal={open} setModal={setOpen} />
-                    {edit &&
-                        <div className='bg-neutral-700 w-[50%] flex justify-between'>
-                            <p className='pl-2'>Edit</p>
-                            <button className='pr-2' onClick={() => { setEdit(false); setSelectChat('') }}>
-                                <CancelOutlinedIcon sx={{ color: "white" }} />
-                            </button>
-                        </div>
-                    }
-                    <div className='w-[50%] fixed bottom-0 flex gap-2 max-md:w-[90%] max-lg:w-[90%]'>
+                    <div className='w-[50%] bottom-0 flex gap-2 max-md:w-[90%] max-lg:w-[90%]'>
+                        {edit &&
+                            <div className='flex'>
+                                <button className='pr-2' onClick={() => { setEdit(false); setSelectChat('') }}>
+                                    <CancelOutlinedIcon sx={{ color: "white" }} />
+                                </button>
+                            </div>
+                        }
                         {edit ? (
                             <TextareaAutosize
                                 placeholder="Message"

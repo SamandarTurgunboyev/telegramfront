@@ -4,7 +4,7 @@ function ContextMenu(props) {
             {props.menuVisible && (
                 <ul
                     style={{
-                        position: 'absolute',
+                        position: 'fixed',
                         top: `${props.menuPosition?.y}px`,
                         left: `${props.menuPosition?.x}px`,
                         backgroundColor: 'white',
