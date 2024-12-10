@@ -237,10 +237,10 @@ function Sorted({ usersOnline, setMessageGroup, setSelectGroup, setPhone, setUse
                     <Menu openMenu={handleOpen} setPhone={setPhone} scrollToBottom={scrollToBottom} setUserName={setUserName} />
                     :
                     <>
-                        <List sx={{ width: '100%' }}>
-                            <Button onClick={handleOpen} >
-                                <MenuIcon sx={{ color: "white" }} />
-                            </Button>
+                        <Button onClick={handleOpen} sx={{ position: 'fixed' }} >
+                            <MenuIcon sx={{ color: "white" }} />
+                        </Button>
+                        <List sx={{ width: '100%', position: 'relative', marginTop: '30px' }}>
                             <Divider variant="inset" component="li" />
                             {receiverMap?.map((e, index) => (
                                 <div key={index}>
