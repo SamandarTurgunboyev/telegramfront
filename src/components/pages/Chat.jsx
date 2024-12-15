@@ -780,26 +780,33 @@ function Chat(
                                                         padding: "8px",
                                                         border: "none",
                                                         cursor: "pointer",
+                                                        zIndex: 100
                                                     }}
-                                                    className='justify-center items-center flex z-10'
+                                                    className='justify-center items-center z-100'
                                                     onClick={recording ? stopRecording : startRecording}
                                                 >
                                                     {recording ? <StopCircleIcon /> : <VideocamIcon />}
                                                 </button>
                                             </>
                                         }
-                                        <div>
-                                            <Modal
-                                                open={videoModal}
-                                                sx={{ zIndex: 0 }}
-                                                aria-labelledby="modal-modal-title"
-                                                aria-describedby="modal-modal-description"
-                                            >
-                                                <Box sx={{ ...style, borderRadius: "100%", overflow: "hidden" }}>
+                                        {videoModal &&
+                                            <div>
+                                                <Box sx={{
+                                                    position: 'absolute',
+                                                    top: '50%',
+                                                    left: '50%',
+                                                    transform: 'translate(-50%, -50%)',
+                                                    width: 400,
+                                                    p: 4,
+                                                    height: 400,
+                                                    borderRadius: "100%",
+                                                    overflow: "hidden",
+                                                    zIndex: 0,
+                                                }}>
                                                     <video ref={videoRef} autoPlay style={{ objectFit: "cover", width: "100%", height: "100%", borderRadius: '100%' }} muted />
                                                 </Box>
-                                            </Modal>
-                                        </div>
+                                            </div>
+                                        }
                                     </>
                                 }
                             </>
