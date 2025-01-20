@@ -598,7 +598,7 @@ function Chat(
                         </>
                         : selectGroup &&
                         <>
-                            <div className='bg-slate-800 h-[20%] w-full flex justify-start items-center fixed'>
+                            <div className='bg-slate-800 flex w-full justify-start items-center'>
                                 {windowWidth <= 576 &&
                                     <Button sx={{ height: '100%' }} onClick={handleClose}>
                                         <WestIcon />
@@ -618,7 +618,7 @@ function Chat(
                                 </Button>
                             </div>
                             <div
-                                className='h-[83%] w-[70%] max-md:w-[100%] max-lg:w-[100%] max-sm:w-[100%]'
+                                className='h-[90%] w-[50%] max-md:w-[90%] max-lg:w-[100%] justify-center items-center'
                                 style={{
                                     overflow: 'auto',
                                     scrollbarWidth: 'none',
